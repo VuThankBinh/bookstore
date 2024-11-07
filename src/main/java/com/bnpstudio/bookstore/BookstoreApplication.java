@@ -15,7 +15,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 
-import com.bnpstudio.bookstore.Entity.Sach;
+import com.bnpstudio.bookstore.Entity.SachEntity;
 
 @SpringBootApplication
 public class BookstoreApplication implements CommandLineRunner {

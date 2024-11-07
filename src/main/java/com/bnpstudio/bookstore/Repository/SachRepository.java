@@ -7,17 +7,15 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.bnpstudio.bookstore.Entity.Sach;
+import com.bnpstudio.bookstore.Entity.SachEntity;
 
 @Repository
-public class SachRepository {
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+public interface SachRepository extends CrudRepository<SachEntity, Integer> {
 
-    public List<Sach> getAllSach() {
+    public List<SachEntity> getAllSach() {
         String sql = "SELECT * FROM Sach";
-        List<Sach> sachs = jdbcTemplate.query(sql,
-                BeanPropertyRowMapper.newInstance(Sach.class));
+        List<SachEntity> sachs = jdbcTemplate.query(sql,
+                BeanPropertyRowMapper.newInstance(SachEntity.class));
         return sachs;
     }
 }
