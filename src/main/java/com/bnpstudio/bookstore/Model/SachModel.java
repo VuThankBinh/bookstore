@@ -1,5 +1,7 @@
 package com.bnpstudio.bookstore.Model;
 
+import com.bnpstudio.bookstore.Entity.Sach;
+
 public class SachModel {
     private int id_sach;
     private int id_danhMuc;
@@ -22,6 +24,17 @@ public class SachModel {
         this.anh_bia = anh_bia;
         this.ghi_chu = ghi_chu;
         this.nha_cung_cap = nha_cung_cap;
+    }
+    public SachModel(Sach sach) {
+        this.id_sach = sach.getId_sach();
+        this.id_danhMuc = sach.getId_danhMuc();
+        this.ten_sach = sach.getTen_sach();
+        this.gia_ban = sach.getGia_ban();
+        this.tac_gia = sach.getTac_gia();
+        this.so_luong = sach.getSo_luong();
+        this.anh_bia = sach.getAnh_bia();
+        this.ghi_chu = sach.getGhi_chu();
+        this.nha_cung_cap = sach.getNha_cung_cap();
     }
     public int getId_sach() {
         return id_sach;

@@ -15,6 +15,8 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 
+import com.bnpstudio.bookstore.Entity.Sach;
+
 @SpringBootApplication
 public class BookstoreApplication implements CommandLineRunner {
 
@@ -27,11 +29,11 @@ public class BookstoreApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		String sql = "select * from Sach";
-		List<Book> books = jdbcTemplate.query(sql,
-			BeanPropertyRowMapper.newInstance(Book.class)
-		);
-		books.forEach(System.out::println);
+		// String sql = "select * from Sach";
+		// List<Book> books = jdbcTemplate.query(sql,
+		// 	BeanPropertyRowMapper.newInstance(Sach.class)
+		// );
+		// books.forEach(System.out::println);
 
 		// List<Book> books2 = jdbcTemplate.query(connection -> {
 		// 	CallableStatement callableStatement = connection.prepareCall("{call GetBookById(?)}");
