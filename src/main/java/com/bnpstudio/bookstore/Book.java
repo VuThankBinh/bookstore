@@ -1,7 +1,7 @@
 package com.bnpstudio.bookstore;
 
 public class Book {
-    private int id;
+    private int id_sach;
     private String bookname;
 
     public Book() {
@@ -9,16 +9,16 @@ public class Book {
     }
 
     public Book(int id, String bookname) {
-        this.id = id;
+        this.id_sach = id;
         this.bookname = bookname;
     }
 
     public int getId() {
-        return id;
+        return id_sach;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.id_sach = id;
     }
 
     public String getBookname() {
@@ -31,6 +31,6 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Book [id=" + id + ", bookname=" + bookname + "]";
+        return "Book [id=" + id_sach + ", bookname=" + bookname + "]";
     }
 }

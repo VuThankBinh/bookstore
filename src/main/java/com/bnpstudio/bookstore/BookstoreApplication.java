@@ -27,17 +27,17 @@ public class BookstoreApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		String sql = "EXEC GetAllBook";
+		String sql = "select * from Sach";
 		List<Book> books = jdbcTemplate.query(sql,
 			BeanPropertyRowMapper.newInstance(Book.class)
 		);
 		books.forEach(System.out::println);
 
-		List<Book> books2 = jdbcTemplate.query(connection -> {
-			CallableStatement callableStatement = connection.prepareCall("{call GetBookById(?)}");
-			callableStatement.setInt("id", 1);
-			return callableStatement;
-		}, BeanPropertyRowMapper.newInstance(Book.class));
-		books2.forEach(System.out::println);
+		// List<Book> books2 = jdbcTemplate.query(connection -> {
+		// 	CallableStatement callableStatement = connection.prepareCall("{call GetBookById(?)}");
+		// 	callableStatement.setInt("id", 1);
+		// 	return callableStatement;
+		// }, BeanPropertyRowMapper.newInstance(Book.class));
+		// books2.forEach(System.out::println);
 	}
 }
