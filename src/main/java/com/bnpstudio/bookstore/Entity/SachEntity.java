@@ -1,8 +1,10 @@
-package com.bnpstudio.bookstore.Model;
+package com.bnpstudio.bookstore.Entity;
 
-import com.bnpstudio.bookstore.Entity.Sach;
-
-public class SachModel {
+@Entity
+@Table(name = "Sach")
+public class SachEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_sach;
     private int id_danhMuc;
     private String ten_sach;
@@ -12,9 +14,9 @@ public class SachModel {
     private String anh_bia;
     private String ghi_chu;
     private String nha_cung_cap;
-    public SachModel() {
+    public SachEntity() {
     }
-    public SachModel(int id_sach, int id_danhMuc, String ten_sach, int gia_ban, String tac_gia, int so_luong, String anh_bia, String ghi_chu, String nha_cung_cap) {
+    public SachEntity(int id_sach, int id_danhMuc, String ten_sach, int gia_ban, String tac_gia, int so_luong, String anh_bia, String ghi_chu, String nha_cung_cap) {
         this.id_sach = id_sach;
         this.id_danhMuc = id_danhMuc;
         this.ten_sach = ten_sach;
@@ -24,17 +26,6 @@ public class SachModel {
         this.anh_bia = anh_bia;
         this.ghi_chu = ghi_chu;
         this.nha_cung_cap = nha_cung_cap;
-    }
-    public SachModel(Sach sach) {
-        this.id_sach = sach.getId_sach();
-        this.id_danhMuc = sach.getId_danhMuc();
-        this.ten_sach = sach.getTen_sach();
-        this.gia_ban = sach.getGia_ban();
-        this.tac_gia = sach.getTac_gia();
-        this.so_luong = sach.getSo_luong();
-        this.anh_bia = sach.getAnh_bia();
-        this.ghi_chu = sach.getGhi_chu();
-        this.nha_cung_cap = sach.getNha_cung_cap();
     }
     public int getId_sach() {
         return id_sach;
@@ -89,9 +80,5 @@ public class SachModel {
     }
     public void setNha_cung_cap(String nha_cung_cap) {
         this.nha_cung_cap = nha_cung_cap;
-    }
-    @Override
-    public String toString() {
-        return "SachModel [id_sach=" + id_sach + ", id_danhMuc=" + id_danhMuc + ", ten_sach=" + ten_sach + ", gia_ban=" + gia_ban + ", tac_gia=" + tac_gia + ", so_luong=" + so_luong + ", anh_bia=" + anh_bia + ", ghi_chu=" + ghi_chu + ", nha_cung_cap=" + nha_cung_cap + "]";
     }
 }

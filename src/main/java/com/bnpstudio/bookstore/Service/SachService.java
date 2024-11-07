@@ -3,24 +3,23 @@ package com.bnpstudio.bookstore.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bnpstudio.bookstore.Entity.Sach;
-import com.bnpstudio.bookstore.Model.SachModel;
+import com.bnpstudio.bookstore.Entity.SachEntity;
 import com.bnpstudio.bookstore.Repository.SachRepository;
+import com.bnpstudio.bookstore.dto.SachDetailDto;
 
 @Service
 public class SachService {
-    private final SachRepository sachRepository;
+    @Autowired
+    private SachRepository sachRepository;
 
-    public SachService(SachRepository sachRepository) {
-        this.sachRepository = sachRepository;
-    }
 
-    public List<SachModel> getAllSach() {
-        List<Sach> sachs = sachRepository.getAllSach();
-        List<SachModel> sachModels = sachs.stream()
-            .map(SachModel::new)
+    public List<SachDetailDto> getAllSach() {
+        List<SachEntity> sachs = sachRepository.getAllSach();
+        List<SachDetailDto> sachModels = sachs.stream()
+            .map(SachDetailDto::new)
             .collect(Collectors.toList());
         return sachModels;
     }
