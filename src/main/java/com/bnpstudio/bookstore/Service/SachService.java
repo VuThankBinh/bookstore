@@ -26,6 +26,7 @@ public class SachService {
     }
 
     public SachDetailDto getById(int id) {
+        System.out.println("id sach: " + id);
         SachEntity sach = sachRepository.findById(id);
         if (sach == null) throw new NotFoundException("Sách không tồn tại");
         return new SachDetailDto(sach);

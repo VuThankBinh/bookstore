@@ -1,30 +1,25 @@
-package com.bnpstudio.bookstore.entity;
+package com.bnpstudio.bookstore.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.bnpstudio.bookstore.entity.LinhVucEntity;
 
-@Entity
-@Table(name = "LinhVuc")
-public class LinhVucEntity {
-    @Id
-    @Column(name = "IdLinhVuc")
+public class LinhVucDto {
     private int idLinhVuc;
-
-    @Column(name = "TenLinhVuc")
     private String tenLinhVuc;
-
-    @Column(name = "MoTa")
     private String moTa;
 
-    public LinhVucEntity() {
+    public LinhVucDto() {
     }
 
-    public LinhVucEntity(int idLinhVuc, String tenLinhVuc, String moTa) {
+    public LinhVucDto(int idLinhVuc, String tenLinhVuc, String moTa) {
         this.idLinhVuc = idLinhVuc;
         this.tenLinhVuc = tenLinhVuc;
         this.moTa = moTa;
+    }
+
+    public LinhVucDto(LinhVucEntity linhVucEntity) {
+        this.idLinhVuc = linhVucEntity.getIdLinhVuc();
+        this.tenLinhVuc = linhVucEntity.getTenLinhVuc();
+        this.moTa = linhVucEntity.getMoTa();
     }
 
     public int getIdLinhVuc() {
@@ -53,6 +48,6 @@ public class LinhVucEntity {
 
     @Override
     public String toString() {
-        return "LinhVucEntity [idLinhVuc=" + idLinhVuc + ", tenLinhVuc=" + tenLinhVuc + ", moTa=" + moTa + "]";
+        return "LinVucDetailDto [idLinhVuc=" + idLinhVuc + ", tenLinhVuc=" + tenLinhVuc + ", moTa=" + moTa + "]";
     }
 }
