@@ -8,10 +8,11 @@ import com.bnpstudio.bookstore.entity.SachEntity;
 
 @Repository
 public interface SachRepository extends JpaRepository<SachEntity, Integer> {
-    // JpaRepository đã có sẵn các phương thức CRUD cơ bản
-    // Không cần định nghĩa getAllSach() nữa vì có thể dùng findAll()
+    @SuppressWarnings("null")
     List<SachEntity> findAll();
     SachEntity findById(int id);
-    SachEntity save(SachEntity sach);
-    void delete(SachEntity sach);
+    List<SachEntity> findByTenSachContainingIgnoreCase(String tenSach);
+
+    List<SachEntity> findByTenSachIgnoreCaseAndTacGiaIgnoreCase(String tenSach,String tacGia);
+    
 }

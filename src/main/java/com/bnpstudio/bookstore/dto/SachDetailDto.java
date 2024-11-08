@@ -5,9 +5,9 @@ import com.bnpstudio.bookstore.entity.SachEntity;
 public class SachDetailDto {
     private int IdSach;
     private int IdDanhMuc;
-    private String TenSach;
+    private String tenSach;
     private float GiaBan;
-    private String TacGia;
+    private String tacGia;
     private int SoLuong;
     private String AnhBia;
     private String GhiChu;
@@ -20,9 +20,9 @@ public class SachDetailDto {
             String anhBia, String ghiChu, String nhaCungCap) {
         this.IdSach = idSach;
         this.IdDanhMuc = idDanhMuc;
-        this.TenSach = tenSach;
+        this.tenSach = tenSach;
         this.GiaBan = giaBan;
-        this.TacGia = tacGia;
+        this.tacGia = tacGia;
         this.SoLuong = soLuong;
         this.AnhBia = anhBia;
         this.GhiChu = ghiChu;
@@ -32,9 +32,9 @@ public class SachDetailDto {
     public SachDetailDto(SachEntity sach) {
         this.IdSach = sach.getIdSach();
         this.IdDanhMuc = sach.getIdDanhMuc();
-        this.TenSach = sach.getTenSach();
+        this.tenSach = sach.getTenSach();
         this.GiaBan = sach.getGiaBan();
-        this.TacGia = sach.getTacGia();
+        this.tacGia = sach.getTacGia();
         this.SoLuong = sach.getSoLuong();
         this.AnhBia = sach.getAnhBia();
         this.GhiChu = sach.getGhiChu();
@@ -50,7 +50,7 @@ public class SachDetailDto {
     }
 
     public String getTenSach() {
-        return TenSach;
+        return tenSach;
     }
 
     public float getGiaBan() {
@@ -58,7 +58,7 @@ public class SachDetailDto {
     }
 
     public String getTacGia() {
-        return TacGia;
+        return tacGia;
     }
 
     public int getSoLuong() {
@@ -86,7 +86,7 @@ public class SachDetailDto {
     }
 
     public void setTenSach(String tenSach) {
-        this.TenSach = tenSach;
+        this.tenSach = tenSach;
     }
 
     public void setGiaBan(float giaBan) {
@@ -94,7 +94,7 @@ public class SachDetailDto {
     }
 
     public void setTacGia(String tacGia) {
-        this.TacGia = tacGia;
+        this.tacGia = tacGia;
     }
 
     public void setSoLuong(int soLuong) {
@@ -115,8 +115,8 @@ public class SachDetailDto {
 
     @Override
     public String toString() {
-        return "SachModel [IdSach=" + IdSach + ", IdDanhMuc=" + IdDanhMuc + ", TenSach=" + TenSach + ", GiaBan="
-                + GiaBan + ", TacGia=" + TacGia + ", SoLuong=" + SoLuong + ", AnhBia=" + AnhBia + ", GhiChu=" + GhiChu
+        return "SachModel [IdSach=" + IdSach + ", IdDanhMuc=" + IdDanhMuc + ", TenSach=" + tenSach + ", GiaBan="
+                + GiaBan + ", TacGia=" + tacGia + ", SoLuong=" + SoLuong + ", AnhBia=" + AnhBia + ", GhiChu=" + GhiChu
                 + ", NhaCungCap=" + NhaCungCap + "]";
     }
 }
