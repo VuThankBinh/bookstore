@@ -9,22 +9,22 @@ import jakarta.persistence.*;
 public class SachEntity {
     @Id
     @Column(name = "IdSach")
-    private int IdSach;
+    private Integer IdSach;
 
     @Column(name = "IdDanhMuc")
-    private int IdDanhMuc;
+    private Integer IdDanhMuc;
 
     @Column(name = "TenSach")
-    private String TenSach;
+    private String tenSach;
 
     @Column(name = "GiaBan")
-    private float GiaBan;
+    private Float GiaBan;
 
     @Column(name = "TacGia")
-    private String TacGia;
+    private String tacGia;
 
     @Column(name = "SoLuong")
-    private int SoLuong;
+    private Integer SoLuong;
 
     @Column(name = "AnhBia")
     private String AnhBia;
@@ -42,9 +42,9 @@ public class SachEntity {
             String anhBia, String ghiChu, String nhaCungCap) {
         this.IdSach = idSach;
         this.IdDanhMuc = idDanhMuc;
-        this.TenSach = tenSach;
+        this.tenSach = tenSach;
         this.GiaBan = giaBan;
-        this.TacGia = tacGia;
+        this.tacGia = tacGia;
         this.SoLuong = soLuong;
         this.AnhBia = anhBia;
         this.GhiChu = ghiChu;
@@ -54,9 +54,9 @@ public class SachEntity {
     public SachEntity(SachDetailDto sachDetail) {
         this.IdSach = sachDetail.getIdSach();
         this.IdDanhMuc = sachDetail.getIdDanhMuc();
-        this.TenSach = sachDetail.getTenSach();
+        this.tenSach = sachDetail.getTenSach();
         this.GiaBan = sachDetail.getGiaBan();
-        this.TacGia = sachDetail.getTacGia();
+        this.tacGia = sachDetail.getTacGia();
         this.SoLuong = sachDetail.getSoLuong();
         this.AnhBia = sachDetail.getAnhBia();
         this.GhiChu = sachDetail.getGhiChu();
@@ -88,11 +88,11 @@ public class SachEntity {
     }
 
     public String getTenSach() {
-        return TenSach;
+        return tenSach;
     }
 
     public void setTenSach(String tenSach) {
-        this.TenSach = tenSach;
+        this.tenSach = tenSach;
     }
 
     public float getGiaBan() {
@@ -104,11 +104,11 @@ public class SachEntity {
     }
 
     public String getTacGia() {
-        return TacGia;
+        return tacGia;
     }
 
     public void setTacGia(String tacGia) {
-        this.TacGia = tacGia;
+        this.tacGia = tacGia;
     }
 
     public int getSoLuong() {
