@@ -29,7 +29,7 @@ public class SachController {
             return ResponseEntity.status(500).body(e.getMessage());
         }
     }
-
+    
     @GetMapping("/getById/{id}")
     public ResponseEntity<?> getById(@PathVariable int id) {
         try {
