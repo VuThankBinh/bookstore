@@ -1,5 +1,7 @@
 package com.bnpstudio.bookstore.entity;
 
+import com.bnpstudio.bookstore.dto.SachDetailDto;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -29,13 +31,15 @@ public class SachEntity {
 
     @Column(name = "GhiChu")
     private String GhiChu;
-    
+
     @Column(name = "NhaCungCap")
     private String NhaCungCap;
 
     public SachEntity() {
     }
-    public SachEntity(int idSach, int idDanhMuc, String tenSach, float giaBan, String tacGia, int soLuong, String anhBia, String ghiChu, String nhaCungCap) {
+
+    public SachEntity(int idSach, int idDanhMuc, String tenSach, float giaBan, String tacGia, int soLuong,
+            String anhBia, String ghiChu, String nhaCungCap) {
         this.IdSach = idSach;
         this.IdDanhMuc = idDanhMuc;
         this.TenSach = tenSach;
@@ -46,7 +50,19 @@ public class SachEntity {
         this.GhiChu = ghiChu;
         this.NhaCungCap = nhaCungCap;
     }
-   
+
+    public SachEntity(SachDetailDto sachDetail) {
+        this.IdSach = sachDetail.getIdSach();
+        this.IdDanhMuc = sachDetail.getIdDanhMuc();
+        this.TenSach = sachDetail.getTenSach();
+        this.GiaBan = sachDetail.getGiaBan();
+        this.TacGia = sachDetail.getTacGia();
+        this.SoLuong = sachDetail.getSoLuong();
+        this.AnhBia = sachDetail.getAnhBia();
+        this.GhiChu = sachDetail.getGhiChu();
+        this.NhaCungCap = sachDetail.getNhaCungCap();
+    }
+
     public String getAnhBia() {
         return AnhBia;
     }

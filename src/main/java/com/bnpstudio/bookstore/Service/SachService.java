@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.bnpstudio.bookstore.dto.SachDetailDto;
 import com.bnpstudio.bookstore.entity.SachEntity;
+import com.bnpstudio.bookstore.exception.NotFoundException;
 import com.bnpstudio.bookstore.repository.SachRepository;
 
 @Service
@@ -23,8 +24,10 @@ public class SachService {
                 .map(SachDetailDto::new)
                 .collect(Collectors.toList());
     }
+
     public SachDetailDto getById(int id) {
         SachEntity sach = sachRepository.findById(id);
+        if (sach == null) throw new NotFoundException("Sách không tồn tại");
         return new SachDetailDto(sach);
     }
 }
