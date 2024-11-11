@@ -1,7 +1,11 @@
 package com.bnpstudio.bookstore.entity;
 
+import com.bnpstudio.bookstore.dto.LinhVucDto;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -9,8 +13,9 @@ import jakarta.persistence.Table;
 @Table(name = "LinhVuc")
 public class LinhVucEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "IdLinhVuc")
-    private int idLinhVuc;
+    private Integer idLinhVuc;
 
     @Column(name = "TenLinhVuc")
     private String tenLinhVuc;
@@ -21,17 +26,23 @@ public class LinhVucEntity {
     public LinhVucEntity() {
     }
 
-    public LinhVucEntity(int idLinhVuc, String tenLinhVuc, String moTa) {
+    public LinhVucEntity(Integer idLinhVuc, String tenLinhVuc, String moTa) {
         this.idLinhVuc = idLinhVuc;
         this.tenLinhVuc = tenLinhVuc;
         this.moTa = moTa;
     }
 
-    public int getIdLinhVuc() {
+    public LinhVucEntity(LinhVucDto linhVuc) {
+        this.idLinhVuc = (linhVuc.getIdLinhVuc() != null) ? linhVuc.getIdLinhVuc() : -1;
+        this.tenLinhVuc = linhVuc.getTenLinhVuc();
+        this.moTa = linhVuc.getMoTa();
+    }
+
+    public Integer getIdLinhVuc() {
         return idLinhVuc;
     }
 
-    public void setIdLinhVuc(int idLinhVuc) {
+    public void setIdLinhVuc(Integer idLinhVuc) {
         this.idLinhVuc = idLinhVuc;
     }
 
