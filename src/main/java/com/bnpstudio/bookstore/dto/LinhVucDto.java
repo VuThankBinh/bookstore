@@ -3,14 +3,14 @@ package com.bnpstudio.bookstore.dto;
 import com.bnpstudio.bookstore.entity.LinhVucEntity;
 
 public class LinhVucDto {
-    private int idLinhVuc;
+    private Integer idLinhVuc;
     private String tenLinhVuc;
     private String moTa;
 
     public LinhVucDto() {
     }
 
-    public LinhVucDto(int idLinhVuc, String tenLinhVuc, String moTa) {
+    public LinhVucDto(Integer idLinhVuc, String tenLinhVuc, String moTa) {
         this.idLinhVuc = idLinhVuc;
         this.tenLinhVuc = tenLinhVuc;
         this.moTa = moTa;
@@ -22,11 +22,11 @@ public class LinhVucDto {
         this.moTa = linhVucEntity.getMoTa();
     }
 
-    public int getIdLinhVuc() {
+    public Integer getIdLinhVuc() {
         return idLinhVuc;
     }
 
-    public void setIdLinhVuc(int idLinhVuc) {
+    public void setIdLinhVuc(Integer idLinhVuc) {
         this.idLinhVuc = idLinhVuc;
     }
 
