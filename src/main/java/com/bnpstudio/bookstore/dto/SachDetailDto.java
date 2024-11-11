@@ -3,12 +3,12 @@ package com.bnpstudio.bookstore.dto;
 import com.bnpstudio.bookstore.entity.SachEntity;
 
 public class SachDetailDto {
-    private int IdSach;
-    private int IdDanhMuc;
+    private Integer IdSach;
+    private Integer IdDanhMuc;
     private String tenSach;
-    private float GiaBan;
+    private Float GiaBan;
     private String tacGia;
-    private int SoLuong;
+    private Integer SoLuong;
     private String AnhBia;
     private String GhiChu;
     private String NhaCungCap;
@@ -16,7 +16,7 @@ public class SachDetailDto {
     public SachDetailDto() {
     }
 
-    public SachDetailDto(int idSach, int idDanhMuc, String tenSach, float giaBan, String tacGia, int soLuong,
+    public SachDetailDto(Integer idSach, Integer idDanhMuc, String tenSach, Float giaBan, String tacGia, Integer soLuong,
             String anhBia, String ghiChu, String nhaCungCap) {
         this.IdSach = idSach;
         this.IdDanhMuc = idDanhMuc;
@@ -41,11 +41,11 @@ public class SachDetailDto {
         this.NhaCungCap = sach.getNhaCungCap();
     }
 
-    public int getIdSach() {
+    public Integer getIdSach() {
         return IdSach;
     }
 
-    public int getIdDanhMuc() {
+    public Integer getIdDanhMuc() {
         return IdDanhMuc;
     }
 
@@ -53,7 +53,7 @@ public class SachDetailDto {
         return tenSach;
     }
 
-    public float getGiaBan() {
+    public Float getGiaBan() {
         return GiaBan;
     }
 
@@ -61,7 +61,7 @@ public class SachDetailDto {
         return tacGia;
     }
 
-    public int getSoLuong() {
+    public Integer getSoLuong() {
         return SoLuong;
     }
 
@@ -77,11 +77,11 @@ public class SachDetailDto {
         return NhaCungCap;
     }
 
-    public void setIdSach(int idSach) {
+    public void setIdSach(Integer idSach) {
         this.IdSach = idSach;
     }
 
-    public void setIdDanhMuc(int idDanhMuc) {
+    public void setIdDanhMuc(Integer idDanhMuc) {
         this.IdDanhMuc = idDanhMuc;
     }
 
@@ -89,7 +89,7 @@ public class SachDetailDto {
         this.tenSach = tenSach;
     }
 
-    public void setGiaBan(float giaBan) {
+    public void setGiaBan(Float giaBan) {
         this.GiaBan = giaBan;
     }
 
@@ -97,7 +97,7 @@ public class SachDetailDto {
         this.tacGia = tacGia;
     }
 
-    public void setSoLuong(int soLuong) {
+    public void setSoLuong(Integer soLuong) {
         this.SoLuong = soLuong;
     }
 

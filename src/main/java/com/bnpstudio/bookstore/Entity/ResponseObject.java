@@ -2,34 +2,17 @@ package com.bnpstudio.bookstore.entity;
 
 import org.springframework.http.HttpStatus;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ResponseObject {
     private HttpStatus status;
     private String message;
     private Object data;
-    public ResponseObject() {
-    }
-    public ResponseObject(HttpStatus status, String message, Object data) {
-        this.status = status;
-        this.message = message;
-        this.data = data;
-    }
-    public HttpStatus getStatus() {
-        return status;
-    }
-    public void setStatus(HttpStatus status) {
-        this.status = status;
-    }
-    public String getMessage() {
-        return message;
-    }
-    public void setMessage(String message) {
-        this.message = message;
-    }
-    public Object getData() {
-        return data;
-    }
-    public void setData(Object data) {
-        this.data = data;
-    }
+    
     
 }

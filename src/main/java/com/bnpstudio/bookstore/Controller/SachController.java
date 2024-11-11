@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bnpstudio.bookstore.dto.SachDetailDto;
 import com.bnpstudio.bookstore.entity.ResponseObject;
-import com.bnpstudio.bookstore.entity.SachEntity;
 import com.bnpstudio.bookstore.service.SachService;
 
 import org.springframework.web.bind.annotation.RequestBody;
@@ -59,7 +58,7 @@ public class SachController {
         }
     }
     @PostMapping("/getByNameAndTacGia")
-    List<SachDetailDto> getByNameAndTacGia(@RequestBody SachEntity sach) {
+    List<SachDetailDto> getByNameAndTacGia(@RequestBody SachDetailDto sach) {
         System.out.println("phg:"+sach.getTenSach());
         try {
             List<SachDetailDto> sachs = sachService.findProduct(sach);
@@ -70,7 +69,7 @@ public class SachController {
         }
     }
     @PostMapping("/insert")
-    ResponseEntity<ResponseObject> insertSach(@RequestBody SachEntity sach) {
+    ResponseEntity<ResponseObject> insertSach(@RequestBody SachDetailDto sach) {
         System.out.println("phg:"+sach.getTenSach());
         try {
             SachDetailDto sachs = sachService.insertProduct(sach);
