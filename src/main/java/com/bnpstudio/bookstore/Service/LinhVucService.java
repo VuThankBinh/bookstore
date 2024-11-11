@@ -11,7 +11,6 @@ import com.bnpstudio.bookstore.repository.LinhVucRepository;
 import com.bnpstudio.bookstore.dto.LinhVucDto;
 import com.bnpstudio.bookstore.entity.LinhVucEntity;
 import com.bnpstudio.bookstore.exception.NotFoundException;
-import com.bnpstudio.bookstore.exception.NotImplementedException;
 
 @Service
 public class LinhVucService {

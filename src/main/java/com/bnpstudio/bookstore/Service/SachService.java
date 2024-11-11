@@ -93,7 +93,7 @@ public class SachService {
         return new SachDetailDto(sachEntity);
     }
 
-    public SachDetailDto UpdateProduct(SachEntity sach) {
+    public SachDetailDto UpdateProduct(SachDetailDto sach) {
         // System.out.println(sach);
         if (sach.getIdSach() == null) {
             throw new NotImplementedException("Giá sản phẩm không được để trống");
@@ -127,8 +127,9 @@ public class SachService {
         if (foundProducts.size() > 0) {
             throw new NotImplementedException("Product already taken");
         }
-        sachRepository.save(sach);
-        return new SachDetailDto(sach);
+        SachEntity sachEntity =new SachEntity(sach);
+        sachRepository.save(sachEntity);
+        return new SachDetailDto(sachEntity);
     }
 
     public void deleteProduct(Integer id) {

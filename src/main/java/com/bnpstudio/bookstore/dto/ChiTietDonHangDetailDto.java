@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChiTietDonHangDto {
+public class ChiTietDonHangDetailDto {
   
     private Integer idDonHang;
     private Integer	idSach;
