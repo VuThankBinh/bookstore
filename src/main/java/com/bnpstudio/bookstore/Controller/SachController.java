@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.bnpstudio.bookstore.exception.BadRequestException;
 import com.bnpstudio.bookstore.exception.NotFoundException;
-import com.bnpstudio.bookstore.exception.NotImplementedException;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -78,6 +78,20 @@ public class SachController {
             
         } catch (Exception e) {
             throw e;// TODO: handle exception
+        }
+    }
+    @DeleteMapping("/delete/{id}")
+    ResponseEntity<ResponseObject> deleteSach(@PathVariable Integer id) {
+        try {
+            sachService.deleteProduct(id);
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ResponseObject(HttpStatus.OK, "Xóa sách thành công", null));
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ResponseObject(HttpStatus.NOT_FOUND, e.getMessage(), null));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseObject(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi khi xóa sách: " + e.getMessage(), null));
         }
     }
 }
