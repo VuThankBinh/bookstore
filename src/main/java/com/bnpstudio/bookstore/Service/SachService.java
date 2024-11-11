@@ -45,7 +45,7 @@ public class SachService {
         return sachs.stream().map(SachDetailDto::new).collect(Collectors.toList());
     }
 
-    public List<SachDetailDto> findProduct(SachEntity sach) {
+    public List<SachDetailDto> findProduct(SachDetailDto sach) {
         System.out.println(sach);
 
         List<SachEntity> foundProducts = sachRepository
@@ -56,7 +56,7 @@ public class SachService {
         throw new NotFoundException("not found products");
     }
 
-    public SachDetailDto insertProduct(SachEntity sach) {
+    public SachDetailDto insertProduct(SachDetailDto sach) {
         // System.out.println(sach);
         if (sach.getAnhBia().trim().isEmpty()) {
             throw new NotImplementedException("Ảnh bìa không được để trống");
@@ -87,9 +87,10 @@ public class SachService {
         if (foundProducts.size() > 0) {
             throw new NotImplementedException("Product already taken");
         }
-        sach.setIdSach(null);
-        sachRepository.save(sach);
-        return new SachDetailDto(sach);
+        SachEntity sachEntity =new SachEntity(sach);
+        sachEntity.setIdSach(null);
+        sachRepository.save(sachEntity);
+        return new SachDetailDto(sachEntity);
     }
 
     public SachDetailDto UpdateProduct(SachEntity sach) {

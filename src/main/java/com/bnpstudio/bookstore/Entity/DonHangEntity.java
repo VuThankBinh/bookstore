@@ -14,24 +14,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "ChiTietDonHang")
-// @IdClass(ChiTietDonHangId.class) 
-public class ChiTietDonHangEntity {
+@Table(name = "DonHang")
+public class DonHangEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")  
-    private Integer id;
-    
     @Column(name = "IdDonHang")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idDonHang;
-    @Column(name = "IdSach")
-    private Integer	idSach;
-    @Column(name = "TenSach")
-    private String tenSach;	    
-    @Column(name = "SoLuong")
-    private Integer soLuong;
-    @Column(name = "DonGia")
-    private Float donGia;
-   
-    
+    @Column(name = "IDNguoiDung")
+    private Integer idNguoiDung;
+    @Column(name = "TenNguoiNhan")
+    private String tenNguoiNhan;
+    @Column(name = "SoDienThoai")
+    private String soDienThoai;
+    @Column(name = "ThongHoaDon")
+    private Float tongHoaDon;
+    @Column(name = "DiaChi")
+    private String diaChi;
 }
