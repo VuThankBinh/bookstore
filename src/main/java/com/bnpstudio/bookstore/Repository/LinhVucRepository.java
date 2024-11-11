@@ -1,5 +1,13 @@
 package com.bnpstudio.bookstore.repository;
 
-public class LinhVucRepository {
-    
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.bnpstudio.bookstore.entity.LinhVucEntity;
+
+@Repository
+public interface LinhVucRepository extends JpaRepository<LinhVucEntity, Integer> {
+    List<LinhVucEntity> findAll();
 }
