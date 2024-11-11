@@ -22,6 +22,22 @@ public class SachService {
     @Autowired
     private ChiTietDonHangRepository chiTietDonHangRepository;
 
+    private SachEntity normalizeData(SachEntity sach) {
+        if (sach == null)
+            return sach;
+            SachEntity sachNormalized = new SachEntity();
+        sachNormalized.setIdSach(sach.getIdSach());
+        sachNormalized.setTenSach(sach.getTenSach() != null ? sach.getTenSach().trim() : null);
+        sachNormalized.setTacGia(sach.getTacGia() != null ? sach.getTacGia().trim() : null);
+        sachNormalized.setAnhBia(sach.getAnhBia() != null ? sach.getAnhBia().trim() : null);
+        sachNormalized.setGhiChu(sach.getGhiChu() != null ? sach.getGhiChu().trim() : null);
+        sachNormalized.setNhaCungCap(sach.getNhaCungCap() != null ? sach.getNhaCungCap().trim() : null);
+        sachNormalized.setGiaBan(sach.getGiaBan());
+        sachNormalized.setSoLuong(sach.getSoLuong());
+        sachNormalized.setIdDanhMuc(sach.getIdDanhMuc());
+        return sachNormalized;
+    }
+
     public List<SachDetailDto> getAll() {
         List<SachEntity> sachs = sachRepository.findAll();
         return sachs.stream()
@@ -49,19 +65,20 @@ public class SachService {
         System.out.println(sach);
 
         List<SachEntity> foundProducts = sachRepository
-                .findByTenSachIgnoreCaseAndTacGiaIgnoreCase(sach.getTenSach().trim(), sach.getTacGia().trim());
+                .findByTenSachIgnoreCaseAndTacGiaIgnoreCase(sach.getTenSach(), sach.getTacGia());
         if (foundProducts.size() > 0) {
             return foundProducts.stream().map(SachDetailDto::new).collect(Collectors.toList());
         }
         throw new NotFoundException("not found products");
     }
 
-    public SachDetailDto insertProduct(SachDetailDto sach) {
+    public SachDetailDto insertProduct(SachEntity sach) {
+        sach = normalizeData(sach);
         // System.out.println(sach);
-        if (sach.getAnhBia().trim().isEmpty()) {
+        if (sach.getAnhBia().isEmpty()) {
             throw new NotImplementedException("Ảnh bìa không được để trống");
         }
-        if (sach.getGhiChu().trim().isEmpty()) {
+        if (sach.getGhiChu().isEmpty()) {
             throw new NotImplementedException("Ghi chú không được để trống");
         }
         if (sach.getGiaBan() == null) {
@@ -73,17 +90,17 @@ public class SachService {
         if (sach.getIdDanhMuc() == null) {
             throw new NotImplementedException("Danh mục không được để trống");
         }
-        if (sach.getNhaCungCap().trim().isEmpty()) {
+        if (sach.getNhaCungCap().isEmpty()) {
             throw new NotImplementedException("Nhà cung cấp không được để trống");
         }
-        if (sach.getTacGia().trim().isEmpty()) {
+        if (sach.getTacGia().isEmpty()) {
             throw new NotImplementedException("Tác giả không được để trống");
         }
-        if (sach.getTenSach().trim().isEmpty()) {
+        if (sach.getTenSach().isEmpty()) {
             throw new NotImplementedException("Tên sách không được để trống");
         }
         List<SachEntity> foundProducts = sachRepository
-                .findByTenSachIgnoreCaseAndTacGiaIgnoreCase(sach.getTenSach().trim(), sach.getTacGia().trim());
+                .findByTenSachIgnoreCaseAndTacGiaIgnoreCase(sach.getTenSach(), sach.getTacGia());
         if (foundProducts.size() > 0) {
             throw new NotImplementedException("Product already taken");
         }
@@ -92,16 +109,17 @@ public class SachService {
         sachRepository.save(sachEntity);
         return new SachDetailDto(sachEntity);
     }
-
-    public SachDetailDto UpdateProduct(SachDetailDto sach) {
+  
+    public SachDetailDto UpdateProduct(SachEntity sach) {
+        sach = normalizeData(sach);
         // System.out.println(sach);
         if (sach.getIdSach() == null) {
             throw new NotImplementedException("Giá sản phẩm không được để trống");
         }
-        if (sach.getAnhBia().trim().isEmpty()) {
+        if (sach.getAnhBia().isEmpty()) {
             throw new NotImplementedException("Ảnh bìa không được để trống");
         }
-        if (sach.getGhiChu().trim().isEmpty()) {
+        if (sach.getGhiChu().isEmpty()) {
             throw new NotImplementedException("Ghi chú không được để trống");
         }
         if (sach.getGiaBan() == null) {
@@ -113,17 +131,17 @@ public class SachService {
         if (sach.getIdDanhMuc() == null) {
             throw new NotImplementedException("Danh mục không được để trống");
         }
-        if (sach.getNhaCungCap().trim().isEmpty()) {
+        if (sach.getNhaCungCap().isEmpty()) {
             throw new NotImplementedException("Nhà cung cấp không được để trống");
         }
-        if (sach.getTacGia().trim().isEmpty()) {
+        if (sach.getTacGia().isEmpty()) {
             throw new NotImplementedException("Tác giả không được để trống");
         }
-        if (sach.getTenSach().trim().isEmpty()) {
+        if (sach.getTenSach().isEmpty()) {
             throw new NotImplementedException("Tên sách không được để trống");
         }
         List<SachEntity> foundProducts = sachRepository
-                .findByTenSachIgnoreCaseAndTacGiaIgnoreCase(sach.getTenSach().trim(), sach.getTacGia().trim());
+                .findByTenSachIgnoreCaseAndTacGiaIgnoreCase(sach.getTenSach(), sach.getTacGia());
         if (foundProducts.size() > 0) {
             throw new NotImplementedException("Product already taken");
         }
@@ -139,7 +157,7 @@ public class SachService {
         }
         // Lấy và cập nhật các chi tiết liên quan
         List<ChiTietDonHangEntity> chiTiets = chiTietDonHangRepository.findByIdSach(sach.get().getIdSach());
-        System.out.println("DSSP: "+ chiTiets);
+        System.out.println("DSSP: " + chiTiets);
         for (ChiTietDonHangEntity chiTiet : chiTiets) {
             chiTiet.setIdSach(0);
             chiTietDonHangRepository.save(chiTiet);
