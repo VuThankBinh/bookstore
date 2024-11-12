@@ -2,7 +2,6 @@ package com.bnpstudio.bookstore.entity;
 
 import org.springframework.http.HttpStatus;
 
-<<<<<<< HEAD
 public class ResponseObject<T> {
     private HttpStatus status;
     private String message;
@@ -32,19 +31,5 @@ public class ResponseObject<T> {
     public void setData(T data) {
         this.data = data;
     }
-=======
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class ResponseObject {
-    private HttpStatus status;
-    private String message;
-    private Object data;
-    
->>>>>>> 60c801f62ae8a157964bd06ff44336f750454601
     
 }
