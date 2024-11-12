@@ -6,7 +6,13 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "Sach")
 public class SachEntity {
@@ -48,21 +54,7 @@ public class SachEntity {
     @NotBlank(message = "Nhà cung cấp không được để trống")
     private String NhaCungCap;
 
-    public SachEntity() {
-    }
-
-    public SachEntity(Integer idSach, Integer idDanhMuc, String tenSach, Float giaBan, String tacGia, Integer soLuong,
-            String anhBia, String ghiChu, String nhaCungCap) {
-        this.IdSach = idSach;
-        this.IdDanhMuc = idDanhMuc;
-        this.tenSach = tenSach;
-        this.GiaBan = giaBan;
-        this.tacGia = tacGia;
-        this.SoLuong = soLuong;
-        this.AnhBia = anhBia;
-        this.GhiChu = ghiChu;
-        this.NhaCungCap = nhaCungCap;
-    }
+    
 
     public SachEntity(SachDetailDto sachDetail) {
         this.IdSach = sachDetail.getIdSach();
@@ -75,76 +67,6 @@ public class SachEntity {
         this.GhiChu = sachDetail.getGhiChu();
         this.NhaCungCap = sachDetail.getNhaCungCap();
     }
-
-    public String getAnhBia() {
-        return AnhBia;
-    }
-
-    public void setAnhBia(String anhBia) {
-        this.AnhBia = anhBia;
-    }
-
-    public Integer getIdSach() {
-        return IdSach;
-    }
-
-    public void setIdSach(Integer idSach) {
-        this.IdSach = idSach;
-    }
-
-    public Integer getIdDanhMuc() {
-        return IdDanhMuc;
-    }
-
-    public void setIdDanhMuc(Integer idDanhMuc) {
-        this.IdDanhMuc = idDanhMuc;
-    }
-
-    public String getTenSach() {
-        return tenSach;
-    }
-
-    public void setTenSach(String tenSach) {
-        this.tenSach = tenSach;
-    }
-
-    public Float getGiaBan() {
-        return GiaBan;
-    }
-
-    public void setGiaBan(float giaBan) {
-        this.GiaBan = giaBan;
-    }
-
-    public String getTacGia() {
-        return tacGia;
-    }
-
-    public void setTacGia(String tacGia) {
-        this.tacGia = tacGia;
-    }
-
-    public Integer getSoLuong() {
-        return SoLuong;
-    }
-
-    public void setSoLuong(Integer soLuong) {
-        this.SoLuong = soLuong;
-    }
-
-    public String getGhiChu() {
-        return GhiChu;
-    }
-
-    public void setGhiChu(String ghiChu) {
-        this.GhiChu = ghiChu;
-    }
-
-    public String getNhaCungCap() {
-        return NhaCungCap;
-    }
-
-    public void setNhaCungCap(String nhaCungCap) {
-        this.NhaCungCap = nhaCungCap;
-    }
+    
+   
 }

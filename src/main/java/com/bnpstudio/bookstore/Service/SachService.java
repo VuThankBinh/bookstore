@@ -61,7 +61,7 @@ public class SachService {
         return sachs.stream().map(SachDetailDto::new).collect(Collectors.toList());
     }
 
-    public List<SachDetailDto> findProduct(SachEntity sach) {
+    public List<SachDetailDto> findProduct(SachDetailDto sach) {
         System.out.println(sach);
 
         List<SachEntity> foundProducts = sachRepository
@@ -104,11 +104,12 @@ public class SachService {
         if (foundProducts.size() > 0) {
             throw new NotImplementedException("Product already taken");
         }
-        sach.setIdSach(null);
-        sachRepository.save(sach);
-        return new SachDetailDto(sach);
+        SachEntity sachEntity =new SachEntity(sach);
+        sachEntity.setIdSach(null);
+        sachRepository.save(sachEntity);
+        return new SachDetailDto(sachEntity);
     }
-
+  
     public SachDetailDto UpdateProduct(SachEntity sach) {
         sach = normalizeData(sach);
         // System.out.println(sach);
@@ -144,8 +145,9 @@ public class SachService {
         if (foundProducts.size() > 0) {
             throw new NotImplementedException("Product already taken");
         }
-        sachRepository.save(sach);
-        return new SachDetailDto(sach);
+        SachEntity sachEntity =new SachEntity(sach);
+        sachRepository.save(sachEntity);
+        return new SachDetailDto(sachEntity);
     }
 
     public void deleteProduct(Integer id) {
