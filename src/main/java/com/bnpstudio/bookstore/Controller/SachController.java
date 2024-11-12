@@ -21,6 +21,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 @RestController
 @RequestMapping("/sach")
@@ -42,6 +46,9 @@ public class SachController {
     public ResponseEntity<ResponseObject> getById(@PathVariable(required = false) Integer id) {
         if (id == null) {
             throw new BadRequestException("id is null");
+        }
+        if (id <1){
+            throw new BadRequestException("id < 1");
         }
         SachDetailDto sachDetailDto = sachService.getById(id);
         return ResponseEntity.ok(new ResponseObject(HttpStatus.OK, "Tìm thấy sách", sachDetailDto));
@@ -65,7 +72,7 @@ public class SachController {
             return sachs;
             
         } catch (Exception e) {
-            throw e;// TODO: handle exception
+            throw e;
         }
     }
     @PostMapping("/insert")
@@ -76,7 +83,18 @@ public class SachController {
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(HttpStatus.OK,"insert product successfully",sachs));
             
         } catch (Exception e) {
-            throw e;// TODO: handle exception
+            throw e;
+        }
+    }
+    @PutMapping("/update")
+    ResponseEntity<ResponseObject> UpdateSach(@RequestBody SachDetailDto sach) {
+        System.out.println("phg:"+sach.getTenSach());
+        try {
+            SachDetailDto sachs = sachService.updateProduct(sach);
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(HttpStatus.OK,"insert product successfully",sachs));
+            
+        } catch (Exception e) {
+            throw e;
         }
     }
     @DeleteMapping("/delete/{id}")
@@ -91,6 +109,29 @@ public class SachController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ResponseObject(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi khi xóa sách: " + e.getMessage(), null));
+        }
+    }
+
+    @GetMapping("/getSachPaging")
+    public ResponseEntity<ResponseObject> getAllPaging(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        try {
+            Pageable paging = PageRequest.of(page, size);
+            List<SachDetailDto> sachPage = sachService.getAllPaging(paging);
+            
+            return ResponseEntity.ok(new ResponseObject(
+                HttpStatus.OK,
+                "Lấy danh sách sách thành công",
+                sachPage
+            ));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ResponseObject(
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Lỗi khi lấy danh sách sách: " + e.getMessage(),
+                    null
+                ));
         }
     }
 }

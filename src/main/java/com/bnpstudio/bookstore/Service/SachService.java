@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.bnpstudio.bookstore.dto.SachDetailDto;
 import com.bnpstudio.bookstore.entity.SachEntity;
@@ -25,7 +27,7 @@ public class SachService {
     private SachEntity normalizeData(SachEntity sach) {
         if (sach == null)
             return sach;
-            SachEntity sachNormalized = new SachEntity();
+        SachEntity sachNormalized = new SachEntity();
         sachNormalized.setIdSach(sach.getIdSach());
         sachNormalized.setTenSach(sach.getTenSach() != null ? sach.getTenSach().trim() : null);
         sachNormalized.setTacGia(sach.getTacGia() != null ? sach.getTacGia().trim() : null);
@@ -41,8 +43,9 @@ public class SachService {
     public List<SachDetailDto> getAll() {
         List<SachEntity> sachs = sachRepository.findAll();
         return sachs.stream()
-                .map(SachDetailDto::new)
-                .collect(Collectors.toList());
+        .filter(sach -> sach.getIdSach() != 0)
+        .map(SachDetailDto::new)
+        .collect(Collectors.toList());
     }
 
     public SachDetailDto getById(int id) {
@@ -72,7 +75,8 @@ public class SachService {
         throw new NotFoundException("not found products");
     }
 
-    public SachDetailDto insertProduct(SachEntity sach) {
+    public SachDetailDto insertProduct(SachDetailDto sachDetailDto) {
+        SachEntity sach = new SachEntity(sachDetailDto);
         sach = normalizeData(sach);
         // System.out.println(sach);
         if (sach.getAnhBia().isEmpty()) {
@@ -104,17 +108,18 @@ public class SachService {
         if (foundProducts.size() > 0) {
             throw new NotImplementedException("Product already taken");
         }
-        SachEntity sachEntity =new SachEntity(sach);
-        sachEntity.setIdSach(null);
-        sachRepository.save(sachEntity);
-        return new SachDetailDto(sachEntity);
+        // SachEntity sachEntity =new SachEntity(sach);
+        sach.setIdSach(null);
+        sachRepository.save(sach);
+        return new SachDetailDto(sach);
     }
-  
-    public SachDetailDto UpdateProduct(SachEntity sach) {
-        sach = normalizeData(sach);
+
+    public SachDetailDto updateProduct(SachDetailDto sachDetailDto) {
+        SachEntity sach = new SachEntity(sachDetailDto);
+        sach =normalizeData(sach);
         // System.out.println(sach);
         if (sach.getIdSach() == null) {
-            throw new NotImplementedException("Giá sản phẩm không được để trống");
+            throw new NotImplementedException("Mã sản phẩm không được để trống");
         }
         if (sach.getAnhBia().isEmpty()) {
             throw new NotImplementedException("Ảnh bìa không được để trống");
@@ -140,14 +145,20 @@ public class SachService {
         if (sach.getTenSach().isEmpty()) {
             throw new NotImplementedException("Tên sách không được để trống");
         }
+        Optional<SachEntity> sach_old = sachRepository.findById(sach.getIdSach());
+        if (sach_old.isEmpty()) {
+
+            throw new NotImplementedException("Không tìm thấy sách để cập nhật");
+        }
         List<SachEntity> foundProducts = sachRepository
                 .findByTenSachIgnoreCaseAndTacGiaIgnoreCase(sach.getTenSach(), sach.getTacGia());
-        if (foundProducts.size() > 0) {
-            throw new NotImplementedException("Product already taken");
+        if (foundProducts.size() > 0 && sach.getTenSach().compareToIgnoreCase(sach_old.get().getTenSach()) != 0
+                && sach.getTacGia().compareToIgnoreCase(sach_old.get().getTacGia()) != 0) {
+            throw new NotImplementedException("Product not IMPLEMENTED");
         }
-        SachEntity sachEntity =new SachEntity(sach);
-        sachRepository.save(sachEntity);
-        return new SachDetailDto(sachEntity);
+        // SachEntity sachEntity =new SachEntity(sach);
+        sachRepository.save(sach);
+        return new SachDetailDto(sach);
     }
 
     public void deleteProduct(Integer id) {
@@ -163,5 +174,13 @@ public class SachService {
             chiTietDonHangRepository.save(chiTiet);
         }
         sachRepository.deleteById(sach.get().getIdSach());
+    }
+
+    public List<SachDetailDto> getAllPaging(Pageable pageable) {
+        Page<SachEntity> sachPage = sachRepository.findAll(pageable);
+        return sachPage.stream()
+                .filter(sach -> sach.getIdSach() != 0)
+                .map(SachDetailDto::new)
+                .collect(Collectors.toList());
     }
 }

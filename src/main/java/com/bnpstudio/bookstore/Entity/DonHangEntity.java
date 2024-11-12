@@ -76,5 +76,6 @@ public class DonHangEntity {
         this.maGiamGia = detailDto.getMaGiamGia();
         this.ghiChu = detailDto.getGhiChu();
     }
+
     
 }
