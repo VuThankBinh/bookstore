@@ -7,13 +7,17 @@ import com.bnpstudio.bookstore.dto.LinhVucDto;
 import com.bnpstudio.bookstore.entity.ResponseObject;
 import com.bnpstudio.bookstore.service.LinhVucService;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("/linhVuc")
@@ -22,7 +26,7 @@ public class LinhVucController {
     private LinhVucService linhVucService;
 
     @GetMapping("/getAll")
-    public ResponseEntity<ResponseObject> getAll() {
+    public ResponseEntity<ResponseObject<List<LinhVucDto>>> getAll() {
         return ResponseEntity.ok(
                 new ResponseObject(
                         HttpStatus.OK,
@@ -40,7 +44,7 @@ public class LinhVucController {
     }
 
     @PostMapping("/insert")
-    public ResponseEntity<ResponseObject> insertLinhVuc(@RequestBody LinhVucDto linhVuc) {
+    public ResponseEntity<ResponseObject<LinhVucDto>> insertLinhVuc(@RequestBody LinhVucDto linhVuc) {
         return ResponseEntity.ok(
                 new ResponseObject(
                         HttpStatus.OK,
@@ -48,4 +52,21 @@ public class LinhVucController {
                         linhVucService.insertLinhVuc(linhVuc)));
     }
 
+    @PutMapping("/update")
+    public ResponseEntity<ResponseObject> updateLinhVuc(@RequestBody LinhVucDto linhVuc) {
+        return ResponseEntity.ok(
+                new ResponseObject(
+                        HttpStatus.OK,
+                        "Cập nhật lĩnh vực thành công",
+                        linhVucService.updateLinhVuc(linhVuc)));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<ResponseObject> deleteLinhVuc(@PathVariable int id) {
+        return ResponseEntity.ok(
+                new ResponseObject(
+                        HttpStatus.OK,
+                        "Xóa lĩnh vực thành công",
+                        linhVucService.deleteLinhVuc(id)));
+    }
 }

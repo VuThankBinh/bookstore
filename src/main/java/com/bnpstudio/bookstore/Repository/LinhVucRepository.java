@@ -14,4 +14,5 @@ public interface LinhVucRepository extends JpaRepository<LinhVucEntity, Integer>
     List<LinhVucEntity> findAll();
     @SuppressWarnings("null")
     Optional<LinhVucEntity> findById(Integer id);
+    Optional<LinhVucEntity> findByTenLinhVucIgnoreCase(String tenLinhVuc);
 }

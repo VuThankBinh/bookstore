@@ -1,5 +1,7 @@
 package com.bnpstudio.bookstore.repository;
 
-public class DanhMucRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+// public interface DanhMucRepository extends JpaRepository {
     
-}
+// }
