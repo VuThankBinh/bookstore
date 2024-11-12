@@ -2,13 +2,13 @@ package com.bnpstudio.bookstore.entity;
 
 import org.springframework.http.HttpStatus;
 
-public class ResponseObject {
+public class ResponseObject<T> {
     private HttpStatus status;
     private String message;
-    private Object data;
+    private T data;
     public ResponseObject() {
     }
-    public ResponseObject(HttpStatus status, String message, Object data) {
+    public ResponseObject(HttpStatus status, String message, T data) {
         this.status = status;
         this.message = message;
         this.data = data;
@@ -25,10 +25,10 @@ public class ResponseObject {
     public void setMessage(String message) {
         this.message = message;
     }
-    public Object getData() {
+    public T getData() {
         return data;
     }
-    public void setData(Object data) {
+    public void setData(T data) {
         this.data = data;
     }
     
