@@ -8,16 +8,20 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.bnpstudio.bookstore.dto.ChiTietDonHangDetailDto;
 import com.bnpstudio.bookstore.dto.DonHangDetailDto;
+import com.bnpstudio.bookstore.entity.ChiTietDonHangEntity;
 import com.bnpstudio.bookstore.entity.DonHangEntity;
 import com.bnpstudio.bookstore.exception.NotFoundException;
+import com.bnpstudio.bookstore.repository.ChiTietDonHangRepository;
 import com.bnpstudio.bookstore.repository.DonHangRepository;
 
 @Service
 public class DonHangService {
     @Autowired
     DonHangRepository donHangRepository;
-
+    @Autowired
+    ChiTietDonHangRepository chiTietDonHangRepository;
     public List<DonHangDetailDto> getAll() {
         List<DonHangEntity> donHangs = donHangRepository.findAll();
         System.out.println("donhangs: " + donHangs);
@@ -49,5 +53,18 @@ public class DonHangService {
         donHangRepository.save(dh);
         return new DonHangDetailDto(dh);
     
+    }
+    public DonHangDetailDto getById (Integer id){
+        if(id == null) {
+            throw new IllegalArgumentException("Id không được để trống");
+        }
+        DonHangEntity dh = donHangRepository.findById(id).orElse(null);
+        List<ChiTietDonHangEntity> chiTietDonHangEntities = chiTietDonHangRepository.findByIdDonHang(id);
+        List<ChiTietDonHangDetailDto> chiTietDonHangDetailDtos = chiTietDonHangEntities.stream()
+                .map(entity -> new ChiTietDonHangDetailDto(entity))
+                .collect(Collectors.toList());
+        DonHangDetailDto donHangDetailDto = new DonHangDetailDto(dh);
+        donHangDetailDto.setChiTietDonHangs(chiTietDonHangDetailDtos);
+        return donHangDetailDto;
     }
 }

@@ -26,7 +26,7 @@ public class DonHangDetailDto {
     private String phuongThucThanhToan;
     private String maGiamGia;
     private String ghiChu;
-    private List<ChiTietDonHangDetailDto> ct;
+    private List<ChiTietDonHangDetailDto> chiTietDonHangs;
 
     public DonHangDetailDto(DonHangEntity donHangEntity) {
         this.idDonHang = donHangEntity.getIdDonHang();

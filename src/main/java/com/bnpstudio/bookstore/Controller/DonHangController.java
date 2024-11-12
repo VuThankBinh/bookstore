@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PutMapping;
 
 import com.bnpstudio.bookstore.exception.BadRequestException;
+import com.bnpstudio.bookstore.exception.NotFoundException;
+
 import org.springframework.http.ResponseEntity;
 import com.bnpstudio.bookstore.entity.ResponseObject;
 import com.bnpstudio.bookstore.service.DonHangService;
@@ -58,4 +60,11 @@ public class DonHangController {
                         donHangService.updateTrangThaiDonHang(id, trangThai)));
     }
 
+    @GetMapping({"/getById/{id}","/getById/"})
+    public ResponseEntity<ResponseObject> getById(@PathVariable(required = false) Integer id) {
+        if(id==null){
+            throw new NotFoundException("id is null");
+        }
+        return ResponseEntity.ok(new ResponseObject(HttpStatus.OK, "Get đơn hàng có mã: " + id + " thành công", donHangService.getById(id)));
+    }
 }

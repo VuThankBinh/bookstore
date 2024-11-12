@@ -72,7 +72,7 @@ public class SachController {
             return sachs;
             
         } catch (Exception e) {
-            throw e;// TODO: handle exception
+            throw e;
         }
     }
     @PostMapping("/insert")
@@ -83,7 +83,7 @@ public class SachController {
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(HttpStatus.OK,"insert product successfully",sachs));
             
         } catch (Exception e) {
-            throw e;// TODO: handle exception
+            throw e;
         }
     }
     @PutMapping("/update")
@@ -94,7 +94,7 @@ public class SachController {
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(HttpStatus.OK,"insert product successfully",sachs));
             
         } catch (Exception e) {
-            throw e;// TODO: handle exception
+            throw e;
         }
     }
     @DeleteMapping("/delete/{id}")
