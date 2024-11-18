@@ -1,5 +1,7 @@
 package com.bnpstudio.bookstore.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +17,9 @@ import com.bnpstudio.bookstore.exception.BadRequestException;
 import com.bnpstudio.bookstore.exception.NotFoundException;
 
 import org.springframework.http.ResponseEntity;
+
+import com.bnpstudio.bookstore.dto.DonHangDetailDto;
+import com.bnpstudio.bookstore.entity.DonHangEntity;
 import com.bnpstudio.bookstore.entity.ResponseObject;
 import com.bnpstudio.bookstore.service.DonHangService;
 
@@ -24,8 +29,9 @@ public class DonHangController {
     @Autowired
     private DonHangService donHangService;
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @GetMapping("/getAll")
-    public ResponseEntity<ResponseObject> getAll() {
+    public ResponseEntity<ResponseObject<List<DonHangEntity>>> getAll() {
         return ResponseEntity.ok(
                 new ResponseObject(
                         HttpStatus.OK,
@@ -33,8 +39,9 @@ public class DonHangController {
                         donHangService.getAll()));
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @GetMapping("/getByTrangThai/{trangThai}")
-    public ResponseEntity<ResponseObject> getByTrangThai(@PathVariable String trangThai,
+    public ResponseEntity<ResponseObject<List<DonHangEntity>>> getByTrangThai(@PathVariable String trangThai,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) throws BadRequestException {
             if(page <0){
@@ -51,8 +58,9 @@ public class DonHangController {
                         donHangService.getDonHangByTrangThai(paging,trangThai)));
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @PutMapping("updateTrangThai/{id}")
-    public ResponseEntity<ResponseObject> updateTrangThai(@PathVariable int id, @RequestParam String trangThai) {
+    public ResponseEntity<ResponseObject<DonHangEntity>> updateTrangThai(@PathVariable int id, @RequestParam String trangThai) {
         return ResponseEntity.ok(
                 new ResponseObject(
                         HttpStatus.OK,
@@ -60,8 +68,9 @@ public class DonHangController {
                         donHangService.updateTrangThaiDonHang(id, trangThai)));
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @GetMapping({"/getById/{id}","/getById/"})
-    public ResponseEntity<ResponseObject> getById(@PathVariable(required = false) Integer id) {
+    public ResponseEntity<ResponseObject<DonHangDetailDto>> getById(@PathVariable(required = false) Integer id) {
         if(id==null){
             throw new NotFoundException("id is null");
         }

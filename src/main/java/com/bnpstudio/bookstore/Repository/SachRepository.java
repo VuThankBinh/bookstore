@@ -13,7 +13,7 @@ public interface SachRepository extends JpaRepository<SachEntity, Integer> {
     @SuppressWarnings("null")
     List<SachEntity> findAll();
     SachEntity findById(int id);
-    List<SachEntity> findByTenSachContainingIgnoreCase(String tenSach);
+    Page<SachEntity> findByTenSachContainingIgnoreCase(Pageable pageable,String tenSach);
 
     List<SachEntity> findByTenSachIgnoreCaseAndTacGiaIgnoreCase(String tenSach,String tacGia);
     
