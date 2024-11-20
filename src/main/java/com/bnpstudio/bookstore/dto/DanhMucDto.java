@@ -14,4 +14,10 @@ public class DanhMucDto {
     private Integer idLinhVuc;
     private String tenDanhMuc;
     private String moTa;
+    public DanhMucDto(DanhMucEntity danhMuc) {
+        this.idDanhMuc = danhMuc.getIdDanhMuc();
+        this.idLinhVuc = danhMuc.getIdLinhVuc();
+        this.tenDanhMuc = danhMuc.getTenDanhMuc();
+        this.moTa = danhMuc.getMoTa();
+    }
 }
