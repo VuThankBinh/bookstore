@@ -1,7 +1,16 @@
 package com.bnpstudio.bookstore.repository;
 
-// import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+import java.util.Optional;
 
-// public interface DanhMucRepository extends JpaRepository {
-    
-// }
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.bnpstudio.bookstore.entity.DanhMucEntity;
+
+@Repository
+public interface DanhMucRepository extends JpaRepository<DanhMucEntity, Integer> {
+    List<DanhMucEntity> findByIdLinhVuc(Integer idLinhVuc);
+
+    Optional<DanhMucEntity> findByTenDanhMuc(String tenDanhMuc);
+}

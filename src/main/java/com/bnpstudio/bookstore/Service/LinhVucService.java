@@ -87,7 +87,7 @@ public class LinhVucService {
         validateUpdateLinhVuc(linhVuc);
         LinhVucEntity linhVucEntity = new LinhVucEntity(linhVuc);
         linhVucRepository.save(linhVucEntity);
-        return new LinhVucDto(linhVucEntity);
+        return linhVuc;
     }
 
     public LinhVucDto deleteLinhVuc(Integer id) {

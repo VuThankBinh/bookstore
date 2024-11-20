@@ -31,4 +31,11 @@ public class DanhMucEntity {
 
     @Column(name = "MoTa")
     private String moTa;
+
+    public DanhMucEntity(DanhMucDto danhMuc) {
+        this.idDanhMuc = danhMuc.getIdDanhMuc();
+        this.idLinhVuc = danhMuc.getIdLinhVuc();
+        this.tenDanhMuc = danhMuc.getTenDanhMuc();
+        this.moTa = danhMuc.getMoTa();
+    }
 }
