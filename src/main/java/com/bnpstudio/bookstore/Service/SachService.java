@@ -16,6 +16,7 @@ import com.bnpstudio.bookstore.exception.NotFoundException;
 import com.bnpstudio.bookstore.exception.NotImplementedException;
 import com.bnpstudio.bookstore.repository.ChiTietDonHangRepository;
 import com.bnpstudio.bookstore.repository.SachRepository;
+import jakarta.validation.Valid;
 
 @Service
 public class SachService {
@@ -49,7 +50,6 @@ public class SachService {
     }
 
     public SachDetailDto getById(int id) {
-        System.out.println("id sach: " + id);
         SachEntity sach = sachRepository.findById(id);
         if (sach == null)
             throw new NotFoundException("Sách không tồn tại");
@@ -75,88 +75,37 @@ public class SachService {
         throw new NotFoundException("not found products");
     }
 
-    public SachDetailDto insertProduct(SachDetailDto sachDetailDto) {
+    public SachDetailDto insertProduct(@Valid SachDetailDto sachDetailDto) {
         SachEntity sach = new SachEntity(sachDetailDto);
         sach = normalizeData(sach);
-        // System.out.println(sach);
-        if (sach.getAnhBia().isEmpty()) {
-            throw new NotImplementedException("Ảnh bìa không được để trống");
-        }
-        if (sach.getGhiChu().isEmpty()) {
-            throw new NotImplementedException("Ghi chú không được để trống");
-        }
-        if (sach.getGiaBan() == null) {
-            throw new NotImplementedException("Giá bán không đư���c để trống");
-        }
-        if (sach.getSoLuong() == null) {
-            throw new NotImplementedException("Số lượng không được để trống");
-        }
-        if (sach.getIdDanhMuc() == null) {
-            throw new NotImplementedException("Danh mục không được để trống");
-        }
-        if (sach.getNhaCungCap().isEmpty()) {
-            throw new NotImplementedException("Nhà cung cấp không được để trống");
-        }
-        if (sach.getTacGia().isEmpty()) {
-            throw new NotImplementedException("Tác giả không được để trống");
-        }
-        if (sach.getTenSach().isEmpty()) {
-            throw new NotImplementedException("Tên sách không được để trống");
-        }
+        
         List<SachEntity> foundProducts = sachRepository
                 .findByTenSachIgnoreCaseAndTacGiaIgnoreCase(sach.getTenSach(), sach.getTacGia());
         if (foundProducts.size() > 0) {
-            throw new NotImplementedException("Product already taken");
+            throw new NotImplementedException("Sản phẩm đã tồn tại");
         }
-        // SachEntity sachEntity =new SachEntity(sach);
+        
         sach.setIdSach(null);
         sachRepository.save(sach);
         return new SachDetailDto(sach);
     }
 
-    public SachDetailDto updateProduct(SachDetailDto sachDetailDto) {
+    public SachDetailDto updateProduct(@Valid SachDetailDto sachDetailDto) {
         SachEntity sach = new SachEntity(sachDetailDto);
-        sach =normalizeData(sach);
-        // System.out.println(sach);
-        if (sach.getIdSach() == null) {
-            throw new NotImplementedException("Mã sản phẩm không được để trống");
-        }
-        if (sach.getAnhBia().isEmpty()) {
-            throw new NotImplementedException("Ảnh bìa không được để trống");
-        }
-        if (sach.getGhiChu().isEmpty()) {
-            throw new NotImplementedException("Ghi chú không được để trống");
-        }
-        if (sach.getGiaBan() == null) {
-            throw new NotImplementedException("Giá bán không được để trống");
-        }
-        if (sach.getSoLuong() == null) {
-            throw new NotImplementedException("Số lượng không được để trống");
-        }
-        if (sach.getIdDanhMuc() == null) {
-            throw new NotImplementedException("Danh mục không được để trống");
-        }
-        if (sach.getNhaCungCap().isEmpty()) {
-            throw new NotImplementedException("Nhà cung cấp không được để trống");
-        }
-        if (sach.getTacGia().isEmpty()) {
-            throw new NotImplementedException("Tác giả không được để trống");
-        }
-        if (sach.getTenSach().isEmpty()) {
-            throw new NotImplementedException("Tên sách không được để trống");
-        }
+        sach = normalizeData(sach);
+        
         Optional<SachEntity> sach_old = sachRepository.findById(sach.getIdSach());
         if (sach_old.isEmpty()) {
-
-            throw new NotImplementedException("Không tìm thấy sách để cập nhật");
+            throw new NotFoundException("Không tìm thấy sách để cập nhật");
         }
-        List<SachEntity> foundProducts = sachRepository
-                .findByTenSachIgnoreCaseAndTacGiaIgnoreCase(sach.getTenSach(), sach.getTacGia());
-        if (foundProducts.size() > 0 && sach.getTenSach().compareToIgnoreCase(sach_old.get().getTenSach()) != 0
-                && sach.getTacGia().compareToIgnoreCase(sach_old.get().getTacGia()) != 0) {
-            throw new NotImplementedException("Product not IMPLEMENTED");
-        }
-        // SachEntity sachEntity =new SachEntity(sach);
+        
+        // List<SachEntity> foundProducts = sachRepository
+        //         .findByTenSachIgnoreCaseAndTacGiaIgnoreCase(sach.getTenSach(), sach.getTacGia());
+        // if (foundProducts.size() > 0 && sach.getTenSach().compareToIgnoreCase(sach_old.get().getTenSach()) != 0
+        //         && sach.getTacGia().compareToIgnoreCase(sach_old.get().getTacGia()) != 0) {
+        //     throw new NotImplementedException("Sản phẩm đã tồn tại");
+        // }
+        
         sachRepository.save(sach);
         return new SachDetailDto(sach);
     }

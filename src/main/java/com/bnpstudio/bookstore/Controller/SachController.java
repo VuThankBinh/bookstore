@@ -1,30 +1,30 @@
 package com.bnpstudio.bookstore.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.http.ResponseEntity;
 import com.bnpstudio.bookstore.dto.SachDetailDto;
-import com.bnpstudio.bookstore.entity.ResponseObject;
+import org.springframework.data.domain.PageRequest;
 import com.bnpstudio.bookstore.service.SachService;
 
-import org.springframework.web.bind.annotation.RequestBody;
+import jakarta.validation.Valid;
 
-import com.bnpstudio.bookstore.exception.BadRequestException;
+import com.bnpstudio.bookstore.entity.ResponseObject;
 import com.bnpstudio.bookstore.exception.NotFoundException;
+import com.bnpstudio.bookstore.exception.BadRequestException;
 
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 
 @RestController
 @RequestMapping("/sach")
@@ -83,31 +83,31 @@ public class SachController {
     // }
     // }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @PostMapping("/insert")
-    ResponseEntity<ResponseObject<SachDetailDto>> insertSach(@RequestBody SachDetailDto sach) {
-        System.out.println("phg:" + sach.getTenSach());
+    public ResponseEntity<ResponseObject<SachDetailDto>> insertProduct(
+            @Valid @RequestBody SachDetailDto sachDetailDto) {
         try {
-            SachDetailDto sachs = sachService.insertProduct(sach);
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(new ResponseObject(HttpStatus.OK, "insert product successfully", sachs));
 
+            SachDetailDto result = sachService.insertProduct(sachDetailDto);
+            return ResponseEntity.ok(
+                new ResponseObject<>(HttpStatus.OK, "Thêm sách thành công", result)
+            );
         } catch (Exception e) {
-            throw e;
+            return ResponseEntity.badRequest()
+                    .body(new ResponseObject<>(HttpStatus.BAD_REQUEST, e.getMessage(), null));
         }
     }
-
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @PutMapping("/update")
-    ResponseEntity<ResponseObject<SachDetailDto>> UpdateSach(@RequestBody SachDetailDto sach) {
-        System.out.println("phg:" + sach.getTenSach());
+    public ResponseEntity<ResponseObject<SachDetailDto>> updateProduct(
+        @Valid @RequestBody SachDetailDto sachDetailDto) {
         try {
-            SachDetailDto sachs = sachService.updateProduct(sach);
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(new ResponseObject(HttpStatus.OK, "insert product successfully", sachs));
-
+            SachDetailDto result = sachService.updateProduct(sachDetailDto);
+            return ResponseEntity.ok(
+                new ResponseObject<>(HttpStatus.OK, "Cập nhật sách thành công", result)
+            );
         } catch (Exception e) {
-            throw e;
+            return ResponseEntity.badRequest()
+                    .body(new ResponseObject<>(HttpStatus.BAD_REQUEST, e.getMessage(), null));
         }
     }
 
