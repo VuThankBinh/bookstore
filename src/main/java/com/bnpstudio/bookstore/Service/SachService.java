@@ -56,9 +56,9 @@ public class SachService {
         return new SachDetailDto(sach);
     }
 
-    public List<SachDetailDto> findByName(String name) {
-        List<SachEntity> sachs = sachRepository.findByTenSachContainingIgnoreCase(name);
-        if (sachs.size() == 0) {
+    public List<SachDetailDto> findByName(Pageable pageable,String name) {
+        Page<SachEntity> sachs = sachRepository.findByTenSachContainingIgnoreCase(pageable, name);
+        if (sachs.isEmpty()) {
             throw new NotFoundException("Không tìm thấy sách có tên: " + name);
         }
         return sachs.stream().map(SachDetailDto::new).collect(Collectors.toList());
@@ -86,7 +86,7 @@ public class SachService {
             throw new NotImplementedException("Ghi chú không được để trống");
         }
         if (sach.getGiaBan() == null) {
-            throw new NotImplementedException("Giá bán không được để trống");
+            throw new NotImplementedException("Giá bán không đư���c để trống");
         }
         if (sach.getSoLuong() == null) {
             throw new NotImplementedException("Số lượng không được để trống");
@@ -162,17 +162,22 @@ public class SachService {
     }
 
     public void deleteProduct(Integer id) {
+        // Kiểm tra sách tồn tại
         Optional<SachEntity> sach = sachRepository.findById(id);
         if (sach.isEmpty()) {
             throw new NotFoundException("Không tìm thấy sách cần xóa");
         }
-        // Lấy và cập nhật các chi tiết liên quan
+
+        // Lấy và cập nhật các chi tiết đơn hàng liên quan
         List<ChiTietDonHangEntity> chiTiets = chiTietDonHangRepository.findByIdSach(sach.get().getIdSach());
-        System.out.println("DSSP: " + chiTiets);
+        
+        // Cập nhật từng chi tiết đơn hàng
         for (ChiTietDonHangEntity chiTiet : chiTiets) {
             chiTiet.setIdSach(0);
             chiTietDonHangRepository.save(chiTiet);
         }
+
+        // Xóa sách
         sachRepository.deleteById(sach.get().getIdSach());
     }
 
@@ -183,4 +188,5 @@ public class SachService {
                 .map(SachDetailDto::new)
                 .collect(Collectors.toList());
     }
+    
 }

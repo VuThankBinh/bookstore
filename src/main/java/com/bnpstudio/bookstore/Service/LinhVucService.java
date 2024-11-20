@@ -31,21 +31,29 @@ public class LinhVucService {
     }
 
     private Boolean validateInsertLinhVuc(LinhVucDto linhVuc) {
-        if(linhVuc == null) throw new BadRequestException("Lĩnh vực không được bỏ trống");
-        if(linhVuc.getTenLinhVuc() == null || linhVuc.getTenLinhVuc().isEmpty()) throw new BadRequestException("Tên lĩnh vực không được bỏ trống");
+        if (linhVuc == null)
+            throw new BadRequestException("Lĩnh vực không được bỏ trống");
+        if (linhVuc.getTenLinhVuc() == null || linhVuc.getTenLinhVuc().isEmpty())
+            throw new BadRequestException("Tên lĩnh vực không được bỏ trống");
         Optional<LinhVucEntity> linhVucFound = linhVucRepository.findByTenLinhVucIgnoreCase(linhVuc.getTenLinhVuc());
-        if(linhVucFound.isPresent()) throw new BadRequestException("Tên lĩnh vực đã tồn tại");
+        if (linhVucFound.isPresent())
+            throw new BadRequestException("Tên lĩnh vực đã tồn tại");
         return true;
     }
 
     private Boolean validateUpdateLinhVuc(LinhVucDto linhVuc) {
-        if(linhVuc == null) throw new BadRequestException("Lĩnh vực không được bỏ trống");
-        if(linhVuc.getIdLinhVuc() == null) throw new BadRequestException("Id lĩnh vực không được bỏ trống");
-        if(linhVuc.getTenLinhVuc() == null || linhVuc.getTenLinhVuc().isEmpty()) throw new BadRequestException("Tên lĩnh vực không được bỏ trống");
+        if (linhVuc == null)
+            throw new BadRequestException("Lĩnh vực không được bỏ trống");
+        if (linhVuc.getIdLinhVuc() == null)
+            throw new BadRequestException("Id lĩnh vực không được bỏ trống");
+        if (linhVuc.getTenLinhVuc() == null || linhVuc.getTenLinhVuc().isEmpty())
+            throw new BadRequestException("Tên lĩnh vực không được bỏ trống");
         Optional<LinhVucEntity> linhVucOld = linhVucRepository.findById(linhVuc.getIdLinhVuc());
-        if(linhVucOld.isEmpty()) throw new BadRequestException("Lĩnh vực có id = " + linhVuc.getIdLinhVuc() + " không tồn tại");
+        if (linhVucOld.isEmpty())
+            throw new BadRequestException("Lĩnh vực có id = " + linhVuc.getIdLinhVuc() + " không tồn tại");
         Optional<LinhVucEntity> linhVucFound = linhVucRepository.findByTenLinhVucIgnoreCase(linhVuc.getTenLinhVuc());
-        if(linhVucFound.isPresent() && !linhVuc.getTenLinhVuc().equalsIgnoreCase(linhVucOld.get().getTenLinhVuc())) throw new BadRequestException("Tên lĩnh vực đã tồn tại");
+        if (linhVucFound.isPresent() && !linhVuc.getTenLinhVuc().equalsIgnoreCase(linhVucOld.get().getTenLinhVuc()))
+            throw new BadRequestException("Tên lĩnh vực đã tồn tại");
         return true;
     }
 
@@ -83,9 +91,11 @@ public class LinhVucService {
     }
 
     public LinhVucDto deleteLinhVuc(Integer id) {
-        if(id == null) throw new BadRequestException("Id lĩnh vực không được bỏ trống");
+        if (id == null)
+            throw new BadRequestException("Id lĩnh vực không được bỏ trống");
         Optional<LinhVucEntity> linhVuc = linhVucRepository.findById(id);
-        if(linhVuc.isEmpty()) throw new BadRequestException("Lĩnh vực có id = " + id + " không tồn tại");
+        if (linhVuc.isEmpty())
+            throw new BadRequestException("Lĩnh vực có id = " + id + " không tồn tại");
         linhVucRepository.deleteById(id);
         return new LinhVucDto(linhVuc.get());
     }

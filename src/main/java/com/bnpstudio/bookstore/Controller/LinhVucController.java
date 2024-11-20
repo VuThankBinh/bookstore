@@ -22,51 +22,56 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RestController
 @RequestMapping("/linhVuc")
 public class LinhVucController {
-    @Autowired
-    private LinhVucService linhVucService;
+        @Autowired
+        private LinhVucService linhVucService;
 
-    @GetMapping("/getAll")
-    public ResponseEntity<ResponseObject<List<LinhVucDto>>> getAll() {
-        return ResponseEntity.ok(
-                new ResponseObject<List<LinhVucDto>>(
-                        HttpStatus.OK,
-                        "Get tất cả lĩnh vực thành công",
-                        linhVucService.getAll()));
-    }
+        @SuppressWarnings({ "rawtypes", "unchecked" })
+        @GetMapping("/getAll")
+        public ResponseEntity<ResponseObject<List<LinhVucDto>>> getAll() {
+                return ResponseEntity.ok(
+                                new ResponseObject(
+                                                HttpStatus.OK,
+                                                "Get tất cả lĩnh vực thành công",
+                                                linhVucService.getAll()));
+        }
 
-    @GetMapping("/getById/{id}")
-    public ResponseEntity<ResponseObject<LinhVucDto>> getById(@PathVariable int id) {
-        return ResponseEntity.ok(
-                new ResponseObject<LinhVucDto>(
-                        HttpStatus.OK,
-                        "Get lĩnh vực có id = " + id + " thành công",
-                        linhVucService.getById(id)));
-    }
+        @SuppressWarnings({ "rawtypes", "unchecked" })
+        @GetMapping("/getById/{id}")
+        public ResponseEntity<ResponseObject> getById(@PathVariable int id) {
+                return ResponseEntity.ok(
+                                new ResponseObject(
+                                                HttpStatus.OK,
+                                                "Get lĩnh vực có id = " + id + " thành công",
+                                                linhVucService.getById(id)));
+        }
 
-    @PostMapping("/insert")
-    public ResponseEntity<ResponseObject<LinhVucDto>> insertLinhVuc(@RequestBody LinhVucDto linhVuc) {
-        return ResponseEntity.ok(
-                new ResponseObject<LinhVucDto>(
-                        HttpStatus.OK,
-                        "Thêm lĩnh vực thành công",
-                        linhVucService.insertLinhVuc(linhVuc)));
-    }
+        @SuppressWarnings({ "rawtypes", "unchecked" })
+        @PostMapping("/insert")
+        public ResponseEntity<ResponseObject<LinhVucDto>> insertLinhVuc(@RequestBody LinhVucDto linhVuc) {
+                return ResponseEntity.ok(
+                                new ResponseObject(
+                                                HttpStatus.OK,
+                                                "Thêm lĩnh vực thành công",
+                                                linhVucService.insertLinhVuc(linhVuc)));
+        }
 
-    @PutMapping("/update")
-    public ResponseEntity<ResponseObject<LinhVucDto>> updateLinhVuc(@RequestBody LinhVucDto linhVuc) {
-        return ResponseEntity.ok(
-                new ResponseObject<LinhVucDto>(
-                        HttpStatus.OK,
-                        "Cập nhật lĩnh vực thành công",
-                        linhVucService.updateLinhVuc(linhVuc)));
-    }
+        @SuppressWarnings({ "rawtypes", "unchecked" })
+        @PutMapping("/update")
+        public ResponseEntity<ResponseObject> updateLinhVuc(@RequestBody LinhVucDto linhVuc) {
+                return ResponseEntity.ok(
+                                new ResponseObject(
+                                                HttpStatus.OK,
+                                                "Cập nhật lĩnh vực thành công",
+                                                linhVucService.updateLinhVuc(linhVuc)));
+        }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<ResponseObject<LinhVucDto>> deleteLinhVuc(@PathVariable int id) {
-        return ResponseEntity.ok(
-                new ResponseObject<LinhVucDto>(
-                        HttpStatus.OK,
-                        "Xóa lĩnh vực thành công",
-                        linhVucService.deleteLinhVuc(id)));
-    }
+        @SuppressWarnings({ "rawtypes", "unchecked" })
+        @DeleteMapping("/delete/{id}")
+        public ResponseEntity<ResponseObject> deleteLinhVuc(@PathVariable int id) {
+                return ResponseEntity.ok(
+                                new ResponseObject(
+                                                HttpStatus.OK,
+                                                "Xóa lĩnh vực thành công",
+                                                linhVucService.deleteLinhVuc(id)));
+        }
 }
