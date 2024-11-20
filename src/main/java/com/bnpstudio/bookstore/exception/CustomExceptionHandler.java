@@ -23,4 +23,14 @@ public class CustomExceptionHandler {
     public ErrorResponse handlerNotImplementedException(NotImplementedException ex, WebRequest req) {
         return new ErrorResponse(HttpStatus.NOT_IMPLEMENTED, ex.getMessage());
     }
+    @ExceptionHandler(EmailExistsException.class)
+    @ResponseStatus(HttpStatus.NOT_IMPLEMENTED)
+    public ErrorResponse handlerEmailExistsException(EmailExistsException ex, WebRequest req) {
+        return new ErrorResponse(HttpStatus.NOT_IMPLEMENTED, ex.getMessage());
+    }
+    @ExceptionHandler(ValidationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handlerValidationException(ValidationException ex, WebRequest req) {
+        return new ErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
 }
