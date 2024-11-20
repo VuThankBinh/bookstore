@@ -52,7 +52,7 @@ public class UserService {
     public UserEntity changePassword(String email, ChangePasswordDto passwordDto) {
         UserEntity user = userRepository.findByEmail(email);
         if (user == null) {
-            throw new RuntimeException("Không tìm thấy người dùng");
+            throw new NotFoundException("Không tìm thấy người dùng");
         }
         
         // Validate mật khẩu cũ
@@ -91,7 +91,7 @@ public class UserService {
     public UserEntity updateProfile(String email, UserDetailDto userDto) {
         UserEntity user = userRepository.findByEmail(email);
         if (user == null) {
-            throw new RuntimeException("Không tìm thấy người dùng");
+            throw new NotFoundException("Không tìm thấy người dùng");
         }
         
         user.setName(userDto.getName());
