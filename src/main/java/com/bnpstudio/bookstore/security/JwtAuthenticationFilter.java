@@ -13,6 +13,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.lang.NonNull;
 
 import com.bnpstudio.bookstore.entity.UserEntity;
 import com.bnpstudio.bookstore.repository.UserRepository;
@@ -31,29 +32,51 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private UserRepository userRepository;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+    protected void doFilterInternal(
+            @NonNull HttpServletRequest request,
+            @NonNull HttpServletResponse response,
+            @NonNull FilterChain filterChain)
             throws ServletException, IOException {
         try {
             String jwt = parseJwt(request);
-            if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
-                String email = jwtUtils.getEmailFromJwtToken(jwt);
-                UserEntity user = userRepository.findByEmail(email);
-
-                if (user != null) {
-                    List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-                    if (user.isAdmin()) {
-                        authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-                    }
-                    authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-
-                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                            email, null, authorities);
-                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-                }
+            if(jwt == null) {
+                filterChain.doFilter(request, response);
+                return;
             }
+
+            if (!jwtUtils.validateJwtToken(jwt)) {
+                throw new RuntimeException("Token không hợp lệ");
+            }
+
+            String email;
+            try {
+                email = jwtUtils.getEmailFromJwtToken(jwt);
+            } catch (Exception e) {
+                throw new RuntimeException("Không thể lấy email từ token", e);
+            }
+
+            UserEntity user = userRepository.findByEmail(email);
+            if (user == null) {
+                throw new RuntimeException("Không tìm thấy người dùng với email: " + email);
+            }
+
+            List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+            if (user.isAdmin()) {
+                authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            }
+            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+
+            try {
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                        email, null, authorities);
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            } catch (Exception e) {
+                throw new RuntimeException("Lỗi khi thiết lập authentication", e);
+            }
+
         } catch (Exception e) {
-            logger.error("Cannot set user authentication: {}", e);
+            throw new RuntimeException("Lỗi khi xác thực người dùng", e);
         }
 
         filterChain.doFilter(request, response);
