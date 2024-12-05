@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.bnpstudio.bookstore.service.SachService;
 import com.bnpstudio.bookstore.dto.SachDetailDto;
 import com.bnpstudio.bookstore.entity.ResponseObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -22,6 +23,7 @@ import java.io.File;
 
 @RestController
 @RequestMapping("/api/books")
+@CrossOrigin(origins = "http://localhost:3000")
 public class BookImageController {
     
     @Autowired
@@ -89,8 +91,15 @@ public class BookImageController {
                 uploadDir.mkdirs();
             }
             
-            // Lưu file với đường dẫn tuyệt đối
+            // Kiểm tra xem file đã tồn tại hay chưa
             Path filePath = Paths.get(uploadPath + File.separator + fileName);
+            // if (Files.exists(filePath)) {
+            //     return ResponseEntity.badRequest().body(
+            //         new ResponseObject<>(HttpStatus.BAD_REQUEST, "File đã tồn tại, vui lòng đổi tên file", null)
+            //     );
+            // }
+            
+            // Lưu file với đường dẫn tuyệt đối
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
             
             // Cập nhật database

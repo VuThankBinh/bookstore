@@ -73,12 +73,17 @@ public class SachService {
         return dto;
     }
 
-    public List<SachDetailDto> findByName(Pageable pageable,String name) {
+    public PageResponse<SachDetailDto> findByName(Pageable pageable,String name) {
         Page<SachEntity> sachs = sachRepository.findByTenSachContainingIgnoreCase(pageable, name);
         if (sachs.isEmpty()) {
             throw new NotFoundException("Không tìm thấy sách có tên: " + name);
         }
-        return sachs.stream().map(SachDetailDto::new).collect(Collectors.toList());
+            return new PageResponse<>(
+            sachs.stream().map(SachDetailDto::new).collect(Collectors.toList()),
+            sachs.getTotalPages(),
+            sachs.getTotalElements(),
+            pageable.getPageNumber()
+        );
     }
 
     public List<SachDetailDto> findProduct(SachDetailDto sach) {
@@ -92,7 +97,14 @@ public class SachService {
         throw new NotFoundException("not found products");
     }
 
-    public SachDetailDto insertProduct(@Valid SachDetailDto sachDetailDto) {
+    public SachDetailDto insertProduct( SachDetailDto sachDetailDto) {
+        Set<ConstraintViolation<SachDetailDto>> dtoViolations1 = validator.validate(sachDetailDto);
+        if (!dtoViolations1.isEmpty()) {
+            String errorMessages = dtoViolations1.stream()
+                .map(ConstraintViolation::getMessage)
+                .collect(Collectors.joining(", "));
+            throw new ValidationException(errorMessages);
+        }
         SachEntity sach = new SachEntity(sachDetailDto);
         sach = normalizeData(sach);
         

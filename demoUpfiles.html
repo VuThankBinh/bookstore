@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tải lên File</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            gap: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: 'Times New Roman', Times, serif;
+            color: #333;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        input {
+            display: block;
+            margin: 10px 0;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: 'Times New Roman', Times, serif;
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        #message {
+            margin-top: 10px;
+            color: red;
+            font-weight: bold;
+            text-align: center;
+            font-family: 'Times New Roman', Times, serif;
+            font-style: italic;
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Ứng dụng Tải lên File</h1>
+        <input type="file" id="fileInput" />
+        <input type="text" id="folderName" placeholder="Tên thư mục" />
+        <input type="email" id="uploaderEmail" placeholder="Email người tải lên" />
+        <button id="uploadButton">Tải lên</button>
+        <p id="message"></p>
+    </div>
+    <script>
+        document.getElementById('uploadButton').addEventListener('click', async () => {
+            const fileInput = document.getElementById('fileInput');
+            const folderName = document.getElementById('folderName').value;
+            const uploaderEmail = document.getElementById('uploaderEmail').value;
+            const messageElement = document.getElementById('message');
+
+            if (!fileInput.files.length) {
+                messageElement.textContent = 'Vui lòng chọn file để tải lên.';
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+            formData.append('folderName', folderName);
+            formData.append('uploaderEmail', uploaderEmail);
+
+            try {
+                const response = await fetch('http://localhost:5000/upload', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                const data = await response.json();
+                messageElement.textContent = data.message;
+            } catch (error) {
+                messageElement.textContent = 'Đã xảy ra lỗi khi tải file lên.';
+                console.error(error);
+            }
+        });
+    </script>
+</body>
+
+</html>

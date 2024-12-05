@@ -7,7 +7,6 @@ import com.bnpstudio.bookstore.dto.SachDetailDto;
 import org.springframework.data.domain.PageRequest;
 import com.bnpstudio.bookstore.service.SachService;
 
-import jakarta.validation.Valid;
 
 import com.bnpstudio.bookstore.entity.ResponseObject;
 import com.bnpstudio.bookstore.exception.NotFoundException;
@@ -58,12 +57,12 @@ public class SachController {
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @GetMapping("/getByName/{name}")
-    ResponseEntity<ResponseObject<List<SachDetailDto>>> getByName(@PathVariable String name,
+    ResponseEntity<ResponseObject<PageResponse<SachDetailDto>>> getByName(@PathVariable String name,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        List<SachDetailDto> sachs = sachService.findByName(pageable, name);
-        if (sachs.size() > 0) {
+        PageResponse<SachDetailDto> sachs = sachService.findByName(pageable, name);
+        if (sachs.getTotalElements() > 0) {
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ResponseObject(HttpStatus.OK, "query product succsessfully", sachs));
         } else {
@@ -71,21 +70,9 @@ public class SachController {
         }
     }
 
-    // @PostMapping("/getByNameAndTacGia")
-    // List<SachDetailDto> getByNameAndTacGia(@RequestBody SachDetailDto sach) {
-    // System.out.println("phg:" + sach.getTenSach());
-    // try {
-    // List<SachDetailDto> sachs = sachService.findProduct(sach);
-    // return sachs;
-
-    // } catch (Exception e) {
-    // throw e;
-    // }
-    // }
-
     @PostMapping("/insert")
     public ResponseEntity<ResponseObject<SachDetailDto>> insertProduct(
-            @Valid @RequestBody SachDetailDto sachDetailDto) {
+            @RequestBody SachDetailDto sachDetailDto) {
         try {
 
             SachDetailDto result = sachService.insertProduct(sachDetailDto);
@@ -99,7 +86,7 @@ public class SachController {
 
     @PutMapping("/update")
     public ResponseEntity<ResponseObject<SachDetailDto>> updateProduct(
-            @Valid @RequestBody SachDetailDto sachDetailDto) {
+            @RequestBody SachDetailDto sachDetailDto) {
         try {
             SachDetailDto result = sachService.updateProduct(sachDetailDto);
             return ResponseEntity.ok(

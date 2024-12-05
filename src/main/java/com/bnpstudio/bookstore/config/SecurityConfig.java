@@ -37,14 +37,15 @@ public class SecurityConfig {
                 .requestMatchers("/api/public/**").permitAll()
                 .requestMatchers("/api/users/**").permitAll()
                 .requestMatchers("/api/otp/**").permitAll()
-                // Cho phép tất cả các request khác
-                // .anyRequest().permitAll()
-                .requestMatchers("/linhVuc/**").permitAll()
-                .requestMatchers("/danhMuc/**").permitAll()
-                .requestMatchers("/donHang/**").permitAll()
-                .requestMatchers("/uploads/images/**").permitAll()
+                .requestMatchers("/api/books/**").permitAll()    
                 .requestMatchers("/dia-chi/**").permitAll()
                 .requestMatchers("/sach/**").permitAll()
+                // Cho phép tất cả các request khác
+                .requestMatchers("/linhVuc/**").authenticated()
+                .requestMatchers("/danhMuc/**").authenticated()
+                .requestMatchers("/donHang/**").authenticated()
+                .requestMatchers("/uploads/**").authenticated()
+                .anyRequest().permitAll()
             )
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
             .csrf(csrf -> csrf.disable());

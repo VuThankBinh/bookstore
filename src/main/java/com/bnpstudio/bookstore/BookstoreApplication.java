@@ -22,6 +22,7 @@ public class BookstoreApplication {
                         .allowedOrigins("*")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
+                        .exposedHeaders("*")
                         .allowCredentials(false)
                         .maxAge(3600);
             }
