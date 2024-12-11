@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @RestController
 @RequestMapping("/sach")
@@ -41,7 +41,6 @@ public class SachController {
                         "Get tất cả lĩnh vực thành công",
                         sachService.getAll()));
     }
-
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @GetMapping({ "/getById/{id}", "/getById/" })
     public ResponseEntity<ResponseObject<SachDetailDto>> getById(@PathVariable(required = false) Integer id) {
