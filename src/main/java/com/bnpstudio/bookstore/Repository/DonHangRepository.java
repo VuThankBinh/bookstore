@@ -12,7 +12,6 @@ import com.bnpstudio.bookstore.entity.DonHangEntity;
 @Repository
 public interface DonHangRepository extends JpaRepository<DonHangEntity,Integer> {
     //get all
-    @SuppressWarnings("null")
     List<DonHangEntity> findAll();
     //get theo trạng thái
     Page<DonHangEntity> findByTrangThaiIgnoreCase(String trangThai,Pageable pageable );

@@ -40,14 +40,13 @@ public class SecurityConfig {
                 .requestMatchers("/api/books/**").permitAll()    
                 .requestMatchers("/dia-chi/**").permitAll()
                 .requestMatchers("/sach/**").permitAll()
-                // Cho phép tất cả các request khác
-                .requestMatchers("/linhVuc/**").authenticated()
-                .requestMatchers("/danhMuc/**").authenticated()
-                .requestMatchers("/donHang/**").authenticated()
-                .requestMatchers("/uploads/**").authenticated()
+                .requestMatchers("/danhMuc/**").permitAll()
+                .requestMatchers("/donHang/**").permitAll()
+                .requestMatchers("/uploads/**").permitAll()
+                .requestMatchers("/linhVuc/**").permitAll()
                 .anyRequest().permitAll()
-            )
-            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                )
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
             .csrf(csrf -> csrf.disable());
         return http.build();
     }

@@ -10,9 +10,7 @@ import com.bnpstudio.bookstore.entity.LinhVucEntity;
 
 @Repository
 public interface LinhVucRepository extends JpaRepository<LinhVucEntity, Integer> {
-    @SuppressWarnings("null")
     List<LinhVucEntity> findAll();
-    @SuppressWarnings("null")
     Optional<LinhVucEntity> findById(Integer id);
     Optional<LinhVucEntity> findByTenLinhVucIgnoreCase(String tenLinhVuc);
 }

@@ -24,7 +24,6 @@ public class OtpService {
     
     @Autowired
     private StringRedisTemplate redisTemplate;
-    @SuppressWarnings("null")
     public void generateAndSendOtp(String email) {
         try {
             if (!redisTemplate.getConnectionFactory().getConnection().isClosed()) {

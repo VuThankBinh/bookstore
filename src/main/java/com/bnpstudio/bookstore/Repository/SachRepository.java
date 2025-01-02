@@ -12,7 +12,6 @@ import com.bnpstudio.bookstore.entity.SachEntity;
 
 @Repository
 public interface SachRepository extends JpaRepository<SachEntity, Integer> {
-    @SuppressWarnings("null")
     List<SachEntity> findAll();
     SachEntity findById(int id);
     Page<SachEntity> findByTenSachContainingIgnoreCase(Pageable pageable,String tenSach);
@@ -21,7 +20,6 @@ public interface SachRepository extends JpaRepository<SachEntity, Integer> {
     
     Page<SachEntity> findByIdDanhMuc(Pageable pageable, Integer idDanhMuc);
 
-    @SuppressWarnings("null")
     Page<SachEntity> findAll(Pageable pageable);
 
     Page<SachEntity> findByIdDanhMucIn(Pageable pageable, List<Integer> idDanhMucs);
