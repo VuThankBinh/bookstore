@@ -3,7 +3,7 @@ package com.bnpstudio.bookstore.controller;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity;     
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 // ... existing imports ...
@@ -31,7 +31,7 @@ public class BookImageController {
     
     @Value("${file.upload-dir}")
     private String uploadDir;
-    
+
     @PostMapping(value = "/image/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ResponseObject<SachDetailDto>> uploadBookImage(
             @RequestParam("bookId") Integer bookId,
@@ -161,7 +161,6 @@ public class BookImageController {
         // Kiểm tra contentType
         String contentType = file.getContentType();
         if (contentType == null) return false;
-        
         // Kiểm tra extension của file
         String originalFilename = file.getOriginalFilename();
         if (originalFilename == null) return false;
@@ -177,4 +176,5 @@ public class BookImageController {
         // Kiểm tra cả contentType và extension
         return contentType.startsWith("image/") && allowedExtensions.contains(extension);
     }
+    
 } 

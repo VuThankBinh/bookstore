@@ -43,6 +43,7 @@ public class UserService {
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
         user.setSoDienThoai(userDto.getSoDienThoai());
+        user.setPassword(userDto.getPassword());
         // Validate entity
         Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
         if (!violations.isEmpty()) {
