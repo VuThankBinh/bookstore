@@ -150,7 +150,7 @@ public class DanhMucService {
         validateUpdateDanhMuc(danhMuc);
         DanhMucEntity danhMucEntity = new DanhMucEntity(danhMuc);
         Set<ConstraintViolation<DanhMucEntity>> dtoViolations = validator.validate(danhMucEntity);
-        if (!dtoViolations.isEmpty()) {
+        if (!dtoViolations.isEmpty()) { 
             String errorMessages = dtoViolations.stream()
                 .map(ConstraintViolation::getMessage)
                 .collect(Collectors.joining(", "));
